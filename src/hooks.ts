@@ -7,8 +7,8 @@ import { useAppDispatch, useAppSelector } from "./store";
 export const useClockInHandler = (todoId: string) => {
   const dispatch = useAppDispatch();
 
-  const timeStamp = Date.now();
   const handleClockIn = useCallback(() => {
+    const timeStamp = Date.now();
     dispatch(clockInsActions.upsertOne(generateClockIn(todoId, timeStamp)));
 
     dispatch(todosActions.updateOne({
@@ -17,7 +17,7 @@ export const useClockInHandler = (todoId: string) => {
         lastClockInStamp: timeStamp,
       }
     }));
-  }, [todoId]);
+  }, [todoId, dispatch]);
 
   return handleClockIn;
 }
@@ -29,12 +29,12 @@ export const useDeleteTodo = (todoId: string) => {
   const deleteTodo = useCallback(() => {
     dispatch(todosActions.removeOne(todoId));
     dispatch(clockInsActions.removeMany(clockIns.map(clockIn => clockIn.id)));
-  }, [todoId]);
+  }, [todoId, clockIns, dispatch]);
 
   return deleteTodo;
 }
 
-export const useCurrentClockInNumber = (todoId: string, unitNumber: number, unit: TimesUnit) => {
+export const useCurrentClockIns = (todoId: string, unitNumber: number, unit: TimesUnit) => {
   const clockIns = useAppSelector(ByTodoIdSelector.bind(null, todoId));
 
   let currentClockIns: ClockIn[];

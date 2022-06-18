@@ -79,8 +79,8 @@ export const getGoByCycleNumber = (clockIns: ClockIn[], unit: TimesUnit, unitNum
   clockIns.sort((a, b) => a.timeStamp - b.timeStamp);
   
   return (
-    getIndexInCycle(unit, clockIns[0].timeStamp)
-    - getIndexInCycle(unit, clockIns[clockIns.length - 1].timeStamp)
+    getIndexInCycle(unit, clockIns[clockIns.length - 1].timeStamp)
+    - getIndexInCycle(unit, clockIns[0].timeStamp)
   ) / unitNumber + 1;
 }
 

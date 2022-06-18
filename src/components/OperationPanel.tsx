@@ -1,18 +1,16 @@
-import { DeleteFilled, ExclamationCircleOutlined } from "@ant-design/icons";
+import { CheckOutlined, DeleteFilled, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Modal, Tag } from "antd"
 import { useMemo, useState } from "react";
 import styled from "styled-components"
-import { COLORS } from "../constant";
 import { generateClockIn, getGoByCycleNumber, getTimes } from "../features/clockInsSlice";
 import { getBaseTime, getTimeSum, isTodoActive, Todo, todosSelectors } from "../features/todosSlice"
-import { useClockInHandler, useClockIns, useCurrentClockInNumber, useDeleteTodo } from "../hooks";
+import { useClockInHandler, useClockIns, useCurrentClockIns, useDeleteTodo } from "../hooks";
 import { getScore } from "../score";
 import { useAppSelector } from "../store"
 import { unitMap } from "./AddTodo";
 
 const StyledCard = styled(Card)`
   overflow: hidden;
-  color: white;
   border-radius: 20px;
   margin: 5px 15px;
   .ant-card-body {
@@ -48,9 +46,6 @@ const CardStatus = styled.div`
   justify-content: space-between;
   padding-right: 10px;
 `;
-const StatusTag = styled(Tag)`
-  font-weight: 700;
-`;
 const CardTitle = styled.div`
   font-size: 22px;
   padding-left: 20px;
@@ -70,8 +65,9 @@ const Actions = styled.div`
   width: 100%;
   background-color: rgba(0, 0, 0, .1);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-end;
+  padding: 0 30px 0 20px;
 `;
 const Mask = styled.div`
   position: absolute;
@@ -85,8 +81,20 @@ const Mask = styled.div`
   align-items: flex-end;
 `;
 
-const DeleteTodoButton = ({ todo }: {
+const StyledTag = styled.span`
+  margin: 0 10px;
+`;
+
+const CheckTagContainer = styled.div`
+  display: flex;
+  overflow: scroll;
+  flex-wrap: nowrap;
+  padding-right: 20px;
+`;
+
+const DeleteTodoButton = ({ todo, darkMode }: {
   todo: Todo;
+  darkMode: boolean;
 }) => {
   const handleDelete = useDeleteTodo(todo.id);
 
@@ -103,7 +111,7 @@ const DeleteTodoButton = ({ todo }: {
   }
 
   return <Button
-    style={{ color: 'white' }}
+    style={{ color: darkMode ? 'white' : 'black' }}
     type="link"
     size="small"
     onMouseDown={e => e.stopPropagation()}
@@ -119,7 +127,8 @@ const TodoCard = ({ todo }: {
   const [bgHeight, setBgHeight] = useState<0 | 100>(0);
   const [opacity, setOpacity] = useState<0 | 1>(1);
 
-  const currentClockIns = useCurrentClockInNumber(todo.id, todo.unitNumber, todo.unit);
+  const currentClockIns = useCurrentClockIns(todo.id, todo.unitNumber, todo.unit);
+  const isCurrentWorkDone = currentClockIns.length >= todo.timesNumber;
 
   const { beginHeightTransition, removeMouseUpListener, handleTouchMove } = useMemo(() => {
     let timer: NodeJS.Timeout;
@@ -198,14 +207,32 @@ const TodoCard = ({ todo }: {
 
   return <StyledCard
     bordered={false}
-    style={{ backgroundColor: disabled ? 'rebeccapurple' : COLORS[~~(score)] }}
+    style={{
+      backgroundColor: !isCurrentWorkDone ? 'white' : 'darkgreen',
+      color: !isCurrentWorkDone ? 'black' : 'white',
+    }}
     onMouseDown={handleMouseDown}
     onTouchStart={handleMouseDown}
     onTouchMove={handleTouchMove}
   >
     <Mask>
       <Actions>
-        <DeleteTodoButton todo={todo} />
+        <CheckTagContainer>
+          {new Array(Math.max(todo.timesNumber, currentClockIns.length)).fill(undefined).map((item, index) => {
+            const clockIn = currentClockIns[index];
+            return <Button
+              key={clockIn ? clockIn.id : index}
+              size="small"
+              type="link"
+              style={{
+                color: !clockIn ? 'lightgray' : isCurrentWorkDone ? 'white' : 'black',
+                margin: '0 -4px',
+              }}
+              icon={<CheckOutlined />}
+            />
+          })}
+        </CheckTagContainer>
+        <DeleteTodoButton todo={todo} darkMode={isCurrentWorkDone} />
       </Actions>
     </Mask>
     <TransBackground style={{ height: bgHeight + '%', opacity }} onTransitionEnd={handleTransitionEnd} />
@@ -213,12 +240,12 @@ const TodoCard = ({ todo }: {
       <CardDetail>
         <CardStatus>
           <div>
-            <Tag color="transparent">
+            <StyledTag>
               {todo.timesNumber}({currentClockIns.length})次/{todo.unitNumber}{unitMap[todo.unit]}
-            </Tag>
-            <Tag color="transparent">
+            </StyledTag>
+            <StyledTag>
               {goByCycleNumber}/{todo.targetUnitNumber}
-            </Tag>
+            </StyledTag>
           </div>
         </CardStatus>
         <CardTitle>
