@@ -85,6 +85,10 @@ export const isTodoActive = (todo: Todo) => {
   return false;
 }
 
+export const isCurrentWorkDone = (todo: Todo) => {
+  return 
+}
+
 export const activeTodosSelector = (state: RootState) => {
   return todosSelectors
     .selectAll(state)
