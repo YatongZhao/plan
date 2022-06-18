@@ -139,7 +139,7 @@ const TodoCard = ({ todo }: {
       clearTimeout(timer);
       timer = setTimeout(() => {
         setBgHeight(100);
-      }, 120);
+      }, 80);
       window.addEventListener('mouseup', handleMouseUp);
       window.addEventListener('touchend', handleMouseUp);
     }
