@@ -1,7 +1,8 @@
 import moment from "moment";
 import { useCallback } from "react";
-import { ByTodoIdSelector, ClockIn, clockInsActions, generateClockIn } from "./features/clockInsSlice";
-import { TimesUnit, todosActions } from "./features/todosSlice";
+import { ByTodoIdSelector, ClockIn, clockInsActions, clockInsSelectors, generateClockIn } from "./features/clockInsSlice";
+import { TimesUnit, todosActions, todosSelectors } from "./features/todosSlice";
+import { getLast30DaysSumScore, getLastCycleAddedScore } from "./score.ver2";
 import { useAppDispatch, useAppSelector } from "./store";
 
 export const useClockInHandler = (todoId: string) => {
@@ -58,4 +59,22 @@ export const useCurrentClockIns = (todoId: string, unitNumber: number, unit: Tim
 
 export const useClockIns = (todoId: string) => {
   return useAppSelector(ByTodoIdSelector.bind(null, todoId));
+}
+
+export const useLastCycleAddedScoreSum = () => {
+  const todos = useAppSelector(todosSelectors.selectAll);
+  const clockIns = useAppSelector(clockInsSelectors.selectAll);
+
+  return todos.reduce((pre, current) => {
+    return pre + getLastCycleAddedScore(current, clockIns.filter(clockIn => clockIn.todoId === current.id).sort((a, b) => a.timeStamp - b.timeStamp));
+  }, 0);
+}
+
+export const useLast30DaysSumScoreSum = () => {
+  const todos = useAppSelector(todosSelectors.selectAll);
+  const clockIns = useAppSelector(clockInsSelectors.selectAll);
+
+  return todos.reduce((pre, current) => {
+    return pre + getLast30DaysSumScore(current, clockIns.filter(clockIn => clockIn.todoId === current.id).sort((a, b) => a.timeStamp - b.timeStamp));
+  }, 0);
 }

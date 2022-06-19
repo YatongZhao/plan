@@ -1,11 +1,12 @@
 import { CheckOutlined, DeleteFilled, ExclamationCircleOutlined } from "@ant-design/icons";
-import { Button, Card, Modal, Tag } from "antd"
+import { Button, Card, Modal } from "antd"
 import { useMemo, useState } from "react";
 import styled from "styled-components"
 import { generateClockIn, getGoByCycleNumber, getTimes } from "../features/clockInsSlice";
-import { getBaseTime, getTimeSum, isTodoActive, Todo, todosSelectors } from "../features/todosSlice"
+import { getBaseTime, getTimeSum, Todo, todosSelectors } from "../features/todosSlice"
 import { useClockInHandler, useClockIns, useCurrentClockIns, useDeleteTodo } from "../hooks";
 import { getScore } from "../score";
+import { getLast30DaysSumScore, getNextAddedScore } from "../score.ver2";
 import { useAppSelector } from "../store"
 import { unitMap } from "./AddTodo";
 
@@ -123,7 +124,6 @@ const DeleteTodoButton = ({ todo, darkMode }: {
 const TodoCard = ({ todo }: {
   todo: Todo;
 }) => {
-  const disabled = !isTodoActive(todo);
   const [bgHeight, setBgHeight] = useState<0 | 100>(0);
   const [opacity, setOpacity] = useState<0 | 1>(1);
 
@@ -166,7 +166,6 @@ const TodoCard = ({ todo }: {
   }, []);
 
   const handleMouseDown = () => {
-    if (disabled) return;
     beginHeightTransition();
   }
 
@@ -193,16 +192,22 @@ const TodoCard = ({ todo }: {
   }
 
   const clockIns = useClockIns(todo.id);
-  const score = getScore(
-    ...getTimes(clockIns, todo.targetUnitNumber, todo.unit, todo.unitNumber),
-    getBaseTime(todo),
-    getTimeSum(todo)
+  // const score = getScore(
+  //   ...getTimes(clockIns, todo.targetUnitNumber, todo.unit, todo.unitNumber),
+  //   getBaseTime(todo),
+  //   getTimeSum(todo)
+  // );
+  const score = getLast30DaysSumScore(todo, clockIns);
+  const willAddScore = getNextAddedScore(
+    todo,
+    [...clockIns, generateClockIn(todo.id, Date.now())],
+    clockIns.length
   );
-  const afterAddScore = getScore(
-    ...getTimes([...clockIns, generateClockIn(todo.id, Date.now())], todo.targetUnitNumber, todo.unit, todo.unitNumber),
-    getBaseTime(todo),
-    getTimeSum(todo)
-  );
+  // const afterAddScore = getScore(
+  //   ...getTimes([...clockIns, generateClockIn(todo.id, Date.now())], todo.targetUnitNumber, todo.unit, todo.unitNumber),
+  //   getBaseTime(todo),
+  //   getTimeSum(todo)
+  // );
   const goByCycleNumber = getGoByCycleNumber(clockIns, todo.unit, todo.unitNumber);
 
   return <StyledCard
@@ -250,7 +255,8 @@ const TodoCard = ({ todo }: {
         </CardStatus>
         <CardTitle>
           {todo.title}
-          <AddedScore>+{(afterAddScore - score).toFixed(1)}</AddedScore>
+          {/* <AddedScore>+{(afterAddScore - score).toFixed(1)}</AddedScore> */}
+          <AddedScore>+{willAddScore.toFixed(1)}</AddedScore>
         </CardTitle>
       </CardDetail>
       <Score>

@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useLast30DaysSumScoreSum, useLastCycleAddedScoreSum } from "../hooks";
 import logo from '../logo.svg';
 
 const Wrapper = styled.div`
@@ -23,11 +24,14 @@ const Span = styled.div`
 `;
 
 export const AppHeader = () => {
+    const lastCycleAddedScoreSum = useLastCycleAddedScoreSum();
+    const last30DaysSumScoreSum = useLast30DaysSumScoreSum();
+
     return <Wrapper>
         <img src={logo} alt="logo" width={30} />
         <SpanBox>
-            <Span>+123</Span>
-            <Span>+123</Span>
+            <Span>{last30DaysSumScoreSum}</Span>
+            <Span>+{lastCycleAddedScoreSum}</Span>
         </SpanBox>
     </Wrapper>
 }
