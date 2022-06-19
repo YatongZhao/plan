@@ -93,14 +93,6 @@ const AddTodoForm = ({ form }: {
 const StyledButton = styled(Button)`
   border-radius: 10px;
 `;
-const ButtonContainer = styled.div`
-  width: calc(100% - 60px);
-  margin: 0 auto;
-  background-color: rgba(255, 255, 255, .3);
-  width: fit-content;
-  border-radius: 10px;
-  padding: 5px 10px;
-`;
 
 export const AddTodo = () => {
   const dispatch = useAppDispatch();
@@ -136,9 +128,7 @@ export const AddTodo = () => {
 
 
   return <>
-    <ButtonContainer>
-      <StyledButton type="primary" onClick={handleClick}>add</StyledButton>
-    </ButtonContainer>
+    <StyledButton type="primary" onClick={handleClick}>Add</StyledButton>
     <Modal transitionName="" title="ADD TODO" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
       <AddTodoForm form={form} />
     </Modal>
