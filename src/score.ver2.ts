@@ -25,7 +25,7 @@ const getCycleId = (todo: Todo, clockIns: ClockIn[], index: number) => {
 export const getNextAddedScore = (todo: Todo, sortedByTimeClockIns: ClockIn[], index: number): number => {
     if (index === 0) return 5;
 
-    if (getCycleId(todo, sortedByTimeClockIns, index) === getCycleId(todo, sortedByTimeClockIns, index - 1)) {
+    if (getCycleId(todo, sortedByTimeClockIns, index) - getCycleId(todo, sortedByTimeClockIns, index - 1) <= 1) {
         return getNextAddedScore(todo, sortedByTimeClockIns, index - 1) + 1;
     }
 
