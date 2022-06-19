@@ -25,8 +25,7 @@ const StyledProgress = styled(Progress)`
 
 export const Dashboard = () => {
   return <StyledCard bordered={false}>
-    Under Control!
-    <StyledProgress
+    {/* <StyledProgress
       strokeWidth={20}
       strokeLinecap="butt"
       showInfo={false}
@@ -36,6 +35,6 @@ export const Dashboard = () => {
       strokeColor={'black'}
       trailColor="transparent"
       size="small"
-    />
+    /> */}
   </StyledCard>
 }
