@@ -41,9 +41,9 @@ export const useCurrentClockIns = (todoId: string, unitNumber: number, unit: Tim
   let currentClockIns: ClockIn[];
 
   if (unit === 'weekly') {
-    const weeksInYear = moment().weeksInYear();
+    const isoWeeksInYear = moment().isoWeeksInYear();
     currentClockIns = clockIns.filter(clockIn => {
-      return moment(clockIn.timeStamp).weeksInYear() === weeksInYear;
+      return moment(clockIn.timeStamp).isoWeeksInYear() === isoWeeksInYear;
     });
   } else if (unit === 'daily') {
     const currentDate = moment().date();

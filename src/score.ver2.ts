@@ -7,7 +7,7 @@ const getCycleIdCore = (unit: TimesUnit, timestamp: number) => {
         case 'daily':
             return moment(timestamp).date();
         case 'weekly':
-            return moment(timestamp).weeksInYear();
+            return moment(timestamp).isoWeeksInYear();
         case 'monthly':
             return moment(timestamp).month();
         case 'quarterly':

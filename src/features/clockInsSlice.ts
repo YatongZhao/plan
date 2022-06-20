@@ -35,7 +35,7 @@ const getIndexInCycle = (unit: TimesUnit, timeStamp?: number) => {
     case 'daily':
       return moment(timeStamp).date();
     case 'weekly':
-      return moment(timeStamp).weeksInYear();
+      return moment(timeStamp).isoWeeksInYear();
     case 'monthly':
       return moment(timeStamp).month();
     case 'quarterly':
