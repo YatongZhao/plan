@@ -29,9 +29,9 @@ export const AppHeader = () => {
 
     return <Wrapper>
         <img src={logo} alt="logo" width={30} />
-        <SpanBox>
+        {/* <SpanBox>
             <Span>{last30DaysSumScoreSum}</Span>
             <Span>+{lastCycleAddedScoreSum}</Span>
-        </SpanBox>
+        </SpanBox> */}
     </Wrapper>
 }
