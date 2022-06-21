@@ -121,7 +121,7 @@ export const Dashboard = () => {
           coordinateSystem: 'polar',
           name: 'line',
           type: 'line',
-          data: sumData,
+          data: data,
           stack: 'total',
           showSymbol: false,
           lineStyle: {
