@@ -1,5 +1,6 @@
 import { CheckOutlined, DeleteFilled, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Modal } from "antd"
+import moment from "moment";
 import { useMemo, useState } from "react";
 import styled from "styled-components"
 import { generateClockIn, getGoByCycleNumber, getTimes } from "../features/clockInsSlice";
@@ -129,6 +130,9 @@ const TodoCard = ({ todo }: {
 
   const currentClockIns = useCurrentClockIns(todo.id, todo.unitNumber, todo.unit);
   const isCurrentWorkDone = currentClockIns.length >= todo.timesNumber;
+  const isTodaysWorkDone = currentClockIns.length > 0
+    && moment(currentClockIns[currentClockIns.length - 1].timeStamp).date() === moment().date();
+  const isDarkMode = isCurrentWorkDone || isTodaysWorkDone;
 
   const { beginHeightTransition, removeMouseUpListener, handleTouchMove } = useMemo(() => {
     let timer: NodeJS.Timeout;
@@ -213,8 +217,8 @@ const TodoCard = ({ todo }: {
   return <StyledCard
     bordered={false}
     style={{
-      backgroundColor: !isCurrentWorkDone ? 'white' : 'darkgreen',
-      color: !isCurrentWorkDone ? 'black' : 'white',
+      backgroundColor: !isDarkMode ? 'white' : 'darkgreen',
+      color: !isDarkMode ? 'black' : 'white',
     }}
     onMouseDown={handleMouseDown}
     onTouchStart={handleMouseDown}
@@ -230,14 +234,16 @@ const TodoCard = ({ todo }: {
               size="small"
               type="link"
               style={{
-                color: !clockIn ? 'lightgray' : isCurrentWorkDone ? 'white' : 'black',
+                color: !clockIn
+                  ? isDarkMode ? 'lightgray' : 'dimgray'
+                  : isDarkMode ? 'white' : 'black',
                 margin: '0 -4px',
               }}
               icon={<CheckOutlined />}
             />
           })}
         </CheckTagContainer>
-        <DeleteTodoButton todo={todo} darkMode={isCurrentWorkDone} />
+        <DeleteTodoButton todo={todo} darkMode={isDarkMode} />
       </Actions>
     </Mask>
     <TransBackground style={{ height: bgHeight + '%', opacity }} onTransitionEnd={handleTransitionEnd} />
