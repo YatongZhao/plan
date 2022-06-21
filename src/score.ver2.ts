@@ -60,6 +60,7 @@ export const getLastCycleAddedScore = (todo: Todo, sortedByTimeClockIns: ClockIn
 
     for (let i = length - 1; i >= 0; i--) {
         const clockIn = sortedByTimeClockIns[i];
+        if (clockIn.timeStamp > timestamp) continue;
 
         if (getCycleIdCore(todo.unit, timestamp) !== getCycleIdCore(todo.unit, clockIn.timeStamp)) {
             break;

@@ -6,7 +6,7 @@ import * as echarts from 'echarts';
 
 const StyledCard = styled(Card)`
   padding-top: 20px;
-  background-color: mediumturquoise;
+  background-color: white;
   & > .ant-card-body {
     font-size: 50px;
     display: flex;
@@ -96,16 +96,8 @@ export const Dashboard = () => {
           },
           smooth: true,
           areaStyle: {
-            color: new echarts.graphic.RadialGradient(0.5, 0.5, 1, [
-              {
-                offset: 0,
-                color: 'rgb(128, 255, 165)'
-              },
-              {
-                offset: 1,
-                color: 'rgb(1, 191, 236)'
-              }
-            ])
+            color: 'red',
+            opacity: 1,
           }
         }
       ]
