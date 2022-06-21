@@ -72,14 +72,15 @@ export const Dashboard = () => {
       //   }
       // },
       grid: {
-        left: '0',
-        right: '0',
+        left: '-30%',
+        right: '30%',
         bottom: '0',
         containLabel: true
       },
       xAxis: [
         {
           type: 'category',
+          inverse: true,
           boundaryGap: false,
           data: sumData.map((sum, i) => sum[1]),
           axisLine: {
@@ -299,7 +300,7 @@ export const Dashboard = () => {
 
   return <>
     <StyledCard>
-      <Canvas width={500} height={500} ref={ref} />
+      <Canvas width={500} height={300} ref={ref} />
       <Board bordered={false}>
           近30天收益：<b>{last30DaysSumScoreSum}</b>
       </Board>
