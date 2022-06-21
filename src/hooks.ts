@@ -66,8 +66,28 @@ export const useLastCycleAddedScoreSum = () => {
   const clockIns = useAppSelector(clockInsSelectors.selectAll);
 
   return todos.reduce((pre, current) => {
-    return pre + getLastCycleAddedScore(current, clockIns.filter(clockIn => clockIn.todoId === current.id).sort((a, b) => a.timeStamp - b.timeStamp));
+    return pre + getLastCycleAddedScore(
+      current,
+      clockIns.filter(clockIn => clockIn.todoId === current.id).sort((a, b) => a.timeStamp - b.timeStamp),
+      Date.now());
   }, 0);
+}
+
+export const useLast30DaysCycleAddedScore = () => {
+  const todos = useAppSelector(todosSelectors.selectAll);
+  const clockIns = useAppSelector(clockInsSelectors.selectAll);
+
+  return new Array(30).fill(0).map((_, i) => {
+    return [
+      todos.reduce((pre, current) => {
+        return pre + getLastCycleAddedScore(
+          current,
+          clockIns.filter(clockIn => clockIn.todoId === current.id).sort((a, b) => a.timeStamp - b.timeStamp),
+          Date.now() - 24 * 60 * 60 * 1000 * i);
+      }, 0),
+      i,
+    ];
+  });
 }
 
 export const useLast30DaysSumScoreSum = () => {

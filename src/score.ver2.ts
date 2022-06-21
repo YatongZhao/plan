@@ -52,7 +52,7 @@ export const getLast30DaysSumScore = (todo: Todo, sortedByTimeClockIns: ClockIn[
     return sumScore;
 }
 
-export const getLastCycleAddedScore = (todo: Todo, sortedByTimeClockIns: ClockIn[]) => {
+export const getLastCycleAddedScore = (todo: Todo, sortedByTimeClockIns: ClockIn[], timestamp: number) => {
     const length = sortedByTimeClockIns.length;
     if (length === 0) return 0;
 
@@ -61,7 +61,7 @@ export const getLastCycleAddedScore = (todo: Todo, sortedByTimeClockIns: ClockIn
     for (let i = length - 1; i >= 0; i--) {
         const clockIn = sortedByTimeClockIns[i];
 
-        if (getCycleIdCore(todo.unit, Date.now()) !== getCycleIdCore(todo.unit, clockIn.timeStamp)) {
+        if (getCycleIdCore(todo.unit, timestamp) !== getCycleIdCore(todo.unit, clockIn.timeStamp)) {
             break;
         } else {
             sumScore += getNextAddedScore(todo, sortedByTimeClockIns, i);
