@@ -32,15 +32,17 @@ export const getNextAddedScore = (todo: Todo, sortedByTimeClockIns: ClockIn[], i
     return 5;
 }
 
-export const getLast30DaysSumScore = (todo: Todo, sortedByTimeClockIns: ClockIn[]) => {
+export const getLast30DaysSumScore = (todo: Todo, sortedByTimeClockIns: ClockIn[], today = moment().date()) => {
     const length = sortedByTimeClockIns.length;
     if (length === 0) return 0;
     
-    const today = moment().date();
     let sumScore = 0;
 
     for (let i = length - 1; i >= 0; i--) {
         const clockIn = sortedByTimeClockIns[i];
+        if (today - moment(clockIn.timeStamp).date() < 0) {
+            continue;
+        }
 
         if (today - moment(clockIn.timeStamp).date() > 30) {
             break;

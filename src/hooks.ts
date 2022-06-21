@@ -98,3 +98,21 @@ export const useLast30DaysSumScoreSum = () => {
     return pre + getLast30DaysSumScore(current, clockIns.filter(clockIn => clockIn.todoId === current.id).sort((a, b) => a.timeStamp - b.timeStamp));
   }, 0);
 }
+
+export const useLast30Days30DaysSumScoreSum = () => {
+  const todos = useAppSelector(todosSelectors.selectAll);
+  const clockIns = useAppSelector(clockInsSelectors.selectAll);
+
+  return new Array(30).fill(0).map((_, i) => {
+    return [
+      todos.reduce((pre, current) => {
+        return pre + getLast30DaysSumScore(
+          current,
+          clockIns.filter(clockIn => clockIn.todoId === current.id).sort((a, b) => a.timeStamp - b.timeStamp),
+          moment().date() - i,
+        );
+      }, 0),
+      i,
+    ];
+  });
+}

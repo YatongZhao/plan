@@ -1,12 +1,13 @@
 import { Card } from "antd";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useLast30DaysCycleAddedScore, useLast30DaysSumScoreSum, useLastCycleAddedScoreSum } from "../hooks";
+import { useLast30Days30DaysSumScoreSum, useLast30DaysCycleAddedScore, useLast30DaysSumScoreSum, useLastCycleAddedScoreSum } from "../hooks";
 import * as echarts from 'echarts';
 
 const StyledCard = styled(Card)`
   padding-top: 20px;
-  background-color: white;
+  background-color: mediumturquoise;
+  /* background-color: white; */
   & > .ant-card-body {
     font-size: 50px;
     display: flex;
@@ -37,9 +38,10 @@ export const Dashboard = () => {
   const ref = useRef(null);
 
   const data = useLast30DaysCycleAddedScore();
+  const sumData = useLast30Days30DaysSumScoreSum();
 
   useEffect(() => {
-    console.log(data);
+    console.log(sumData);
     if (!ref.current) return;
 
     const chart = echarts.init(ref.current);
@@ -62,15 +64,25 @@ export const Dashboard = () => {
           show: false,
         },
         axisLine: {
+          show: false,
           lineStyle: {
-            color: 'lightgray'
+            color: 'white',
+            width: 10,
           }
         },
         splitLine: {
           lineStyle: {
-            width: 1,
+            color: 'white',
+            width: 2,
           }
-        }
+        },
+        // splitArea: {
+        //   show: true,
+        //   areaStyle: {
+        //     color: 'mediumturquoise',
+        //     opacity: 0.1,
+        //   },
+        // },
       },
       radiusAxis: {
         axisLabel: {
@@ -82,13 +94,34 @@ export const Dashboard = () => {
         axisLine: {
           show: false,
         },
+        splitLine: {
+          lineStyle: {
+            color: 'white',
+            width: 1,
+          }
+        }
       },
       series: [
         {
           coordinateSystem: 'polar',
           name: 'line',
           type: 'line',
-          data: data,
+          data: sumData.map((sum, i) => [sum[0] - data[i][0], sum[1]]),
+          stack: 'total',
+          showSymbol: false,
+          lineStyle: {
+            width: 0
+          },
+          smooth: true,
+          areaStyle: {
+            color: 'red',
+          }
+        },
+        {
+          coordinateSystem: 'polar',
+          name: 'line',
+          type: 'line',
+          data: sumData,
           stack: 'total',
           showSymbol: false,
           lineStyle: {
@@ -99,12 +132,12 @@ export const Dashboard = () => {
             color: 'red',
             opacity: 1,
           }
-        }
+        },
       ]
     };
 
     chart.setOption(option);
-  }, [ref, data]);
+  }, [ref, sumData, data]);
 
   return <>
     <StyledCard bordered={false}>
