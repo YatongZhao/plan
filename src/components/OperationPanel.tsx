@@ -9,6 +9,7 @@ import { useClockInHandler, useClockIns, useCurrentClockIns, useDeleteTodo } fro
 import { getScore } from "../score";
 import { getLast30DaysSumScore, getNextAddedScore } from "../score.ver2";
 import { useAppSelector } from "../store"
+import { late3HourMoment } from "../utils";
 import { unitMap } from "./AddTodo";
 
 const StyledCard = styled(Card)`
@@ -131,7 +132,7 @@ const TodoCard = ({ todo }: {
   const currentClockIns = useCurrentClockIns(todo.id, todo.unitNumber, todo.unit);
   const isCurrentWorkDone = currentClockIns.length >= todo.timesNumber;
   const isTodaysWorkDone = currentClockIns.length > 0
-    && moment(currentClockIns[currentClockIns.length - 1].timeStamp).date() === moment().date();
+    && late3HourMoment(currentClockIns[currentClockIns.length - 1].timeStamp).date() === late3HourMoment().date();
   const isDarkMode = isCurrentWorkDone || isTodaysWorkDone;
 
   const { beginHeightTransition, removeMouseUpListener, handleTouchMove } = useMemo(() => {

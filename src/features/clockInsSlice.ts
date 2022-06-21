@@ -2,7 +2,7 @@ import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import moment from "moment";
 import { v4 } from "uuid";
 import { RootState } from "../store";
-import { extractAdapterReducer } from "../utils";
+import { extractAdapterReducer, late3HourMoment } from "../utils";
 import { TimesUnit } from "./todosSlice";
 
 export type ClockIn = {
@@ -33,16 +33,16 @@ export const ByTodoIdSelector = (todoId: string, state: RootState) => {
 const getIndexInCycle = (unit: TimesUnit, timeStamp?: number) => {
   switch (unit) {
     case 'daily':
-      return moment(timeStamp).date();
+      return late3HourMoment(timeStamp).date();
     case 'weekly':
-      return moment(timeStamp).isoWeek();
+      return late3HourMoment(timeStamp).isoWeek();
     case 'monthly':
-      return moment(timeStamp).month();
+      return late3HourMoment(timeStamp).month();
     case 'quarterly':
-      return moment(timeStamp).quarter();
+      return late3HourMoment(timeStamp).quarter();
     case 'yearly':
     default:
-      return moment(timeStamp).year();
+      return late3HourMoment(timeStamp).year();
   };
 }
 

@@ -1,21 +1,21 @@
 import moment from "moment";
 import { ClockIn } from "./features/clockInsSlice";
 import { TimesUnit, Todo } from "./features/todosSlice";
+import { late3HourMoment } from "./utils";
 
 const getCycleIdCore = (unit: TimesUnit, timestamp: number) => {
-    const transTimestamp = timestamp - 3 * 60 * 60 * 1000;
     switch (unit) {
         case 'daily':
-            return moment(transTimestamp).date();
+            return late3HourMoment(timestamp).date();
         case 'weekly':
-            return moment(transTimestamp).isoWeek();
+            return late3HourMoment(timestamp).isoWeek();
         case 'monthly':
-            return moment(transTimestamp).month();
+            return late3HourMoment(timestamp).month();
         case 'quarterly':
-            return moment(transTimestamp).quarter();
+            return late3HourMoment(timestamp).quarter();
         case 'yearly':
         default:
-            return moment(transTimestamp).year();
+            return late3HourMoment(timestamp).year();
     }
 }
 
@@ -33,7 +33,7 @@ export const getNextAddedScore = (todo: Todo, sortedByTimeClockIns: ClockIn[], i
     return 5;
 }
 
-export const getLast30DaysSumScore = (todo: Todo, sortedByTimeClockIns: ClockIn[], today = moment().date()) => {
+export const getLast30DaysSumScore = (todo: Todo, sortedByTimeClockIns: ClockIn[], today = late3HourMoment().date()) => {
     const length = sortedByTimeClockIns.length;
     if (length === 0) return 0;
     
@@ -41,11 +41,11 @@ export const getLast30DaysSumScore = (todo: Todo, sortedByTimeClockIns: ClockIn[
 
     for (let i = length - 1; i >= 0; i--) {
         const clockIn = sortedByTimeClockIns[i];
-        if (today - moment(clockIn.timeStamp).date() < 0) {
+        if (today - late3HourMoment(clockIn.timeStamp).date() < 0) {
             continue;
         }
 
-        if (today - moment(clockIn.timeStamp).date() > 30) {
+        if (today - late3HourMoment(clockIn.timeStamp).date() > 30) {
             break;
         } else {
             sumScore += getNextAddedScore(todo, sortedByTimeClockIns, i);

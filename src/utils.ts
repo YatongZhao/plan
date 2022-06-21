@@ -1,4 +1,5 @@
 import { EntityAdapter } from "@reduxjs/toolkit";
+import moment from "moment";
 
 export const extractAdapterReducer = <T>(adapter: EntityAdapter<T>) => {
   return {
@@ -16,3 +17,5 @@ export const extractAdapterReducer = <T>(adapter: EntityAdapter<T>) => {
     upsertMany: adapter.upsertMany,
   };
 };
+
+export const late3HourMoment = (timestamp?: number) => moment((timestamp || Date.now()) - 3 * 60 * 60 * 1000);
