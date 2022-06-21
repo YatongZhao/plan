@@ -70,9 +70,9 @@ export const Dashboard = () => {
         },
         splitLine: {
           lineStyle: {
-            color: 'white',
+            color: 'black',
             width: 2,
-            opacity: 0.2,
+            opacity: 1,
           }
         },
         splitArea: {
@@ -106,7 +106,7 @@ export const Dashboard = () => {
           coordinateSystem: 'polar',
           name: 'line',
           type: 'line',
-          data: sumData.map((sum, i) => [max * 0.5, sum[1]]),
+          data: sumData.map((sum, i) => [max * 1.5, sum[1]]),
           stack: 'total',
           showSymbol: false,
           lineStyle: {
