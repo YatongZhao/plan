@@ -134,7 +134,7 @@ export const Dashboard = () => {
           // smooth: true,
           areaStyle: {
             color: 'red',
-            opacity: 0.3,
+            opacity: 0.1,
           }
         },
         {
