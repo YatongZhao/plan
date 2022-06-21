@@ -6,7 +6,7 @@ import * as echarts from 'echarts';
 
 const StyledCard = styled(Card)`
   background-color: mediumturquoise;
-  background-color: white;
+  /* background-color: white; */
   & > .ant-card-body {
     font-size: 50px;
     display: flex;
@@ -75,12 +75,13 @@ export const Dashboard = () => {
           lineStyle: {
             color: 'white',
             width: 2,
+            opacity: 0.1,
           }
         },
         splitArea: {
           show: true,
           areaStyle: {
-            color: 'mediumturquoise',
+            color: 'white',
             opacity: 0.1,
           },
         },
@@ -104,6 +105,22 @@ export const Dashboard = () => {
         }
       },
       series: [
+        {
+          coordinateSystem: 'polar',
+          name: 'line',
+          type: 'line',
+          data: sumData.map((sum, i) => [500, sum[1]]),
+          stack: 'total',
+          showSymbol: false,
+          lineStyle: {
+            width: 0
+          },
+          // smooth: true,
+          areaStyle: {
+            color: 'red',
+            opacity: 0,
+          }
+        },
         {
           coordinateSystem: 'polar',
           name: 'line',
