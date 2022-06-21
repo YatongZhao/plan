@@ -235,7 +235,7 @@ const TodoCard = ({ todo }: {
               type="link"
               style={{
                 color: !clockIn
-                  ? isDarkMode ? 'lightgray' : 'dimgray'
+                  ? isDarkMode ? 'dimgray' : 'lightgray'
                   : isDarkMode ? 'white' : 'black',
                 margin: '0 -4px',
               }}
