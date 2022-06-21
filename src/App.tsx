@@ -27,6 +27,10 @@ const Header = styled(Row)`
   z-index: 100;
 `;
 
+const Main = styled(Row)`
+  margin-bottom: 50px;
+`
+
 const Bottom = styled(Row)`
   position: fixed;
   left: 50%;
@@ -63,11 +67,11 @@ function App() {
           <AppHeader />
         </StyledCol>
       </Header>
-      <Row style={{ backgroundColor: 'mediumturquoise' }} gutter={[{ xs: 2, lg: 8 }, { xs: 2, lg: 8 }]}>
+      <Main style={{ backgroundColor: 'mediumturquoise' }} gutter={[{ xs: 2, lg: 8 }, { xs: 2, lg: 8 }]}>
         <StyledCol>
           <OperationPanel />
         </StyledCol>
-      </Row>
+      </Main>
       <Bottom gutter={[{ xs: 2, lg: 8 }, { xs: 2, lg: 8 }]}>
         <StyledCol>
           <ButtonContainer>
