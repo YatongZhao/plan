@@ -46,12 +46,9 @@ export const Dashboard = () => {
     if (!ref.current) return;
 
     const chart = echarts.init(ref.current);
-    // const data = [];
-    // for (let i = 0; i <= 30; i++) {
-    //   let theta = i;
-    //   let r = 5 * (1 + (theta / 180) * Math.PI);
-    //   data.push([r, theta]);
-    // }
+    const max = sumData.reduce((pre, current) => {
+      return current[0] > pre ? current[0] : pre;
+    }, 0);
     const option = {
       polar: {},
       angleAxis: {
@@ -75,14 +72,14 @@ export const Dashboard = () => {
           lineStyle: {
             color: 'white',
             width: 2,
-            opacity: 0.1,
+            opacity: 0.2,
           }
         },
         splitArea: {
           show: true,
           areaStyle: {
             color: 'white',
-            opacity: 0.1,
+            opacity: 0,
           },
         },
       },
@@ -109,15 +106,33 @@ export const Dashboard = () => {
           coordinateSystem: 'polar',
           name: 'line',
           type: 'line',
-          data: sumData.map((sum, i) => [50, sum[1]]),
+          data: sumData.map((sum, i) => [max * 0.5, sum[1]]),
           stack: 'total',
           showSymbol: false,
           lineStyle: {
-            width: 0
+            width: 0,
+            color: 'black',
           },
           // smooth: true,
           areaStyle: {
             color: 'mediumturquoise',
+            opacity: 1,
+          }
+        },
+        {
+          coordinateSystem: 'polar',
+          name: 'line',
+          type: 'line',
+          data: sumData.map((sum, i) => [5, sum[1]]),
+          stack: 'total',
+          showSymbol: false,
+          lineStyle: {
+            width: 0,
+            color: 'black',
+          },
+          // smooth: true,
+          areaStyle: {
+            color: 'black',
             opacity: 1,
           }
         },
@@ -134,7 +149,7 @@ export const Dashboard = () => {
           // smooth: true,
           areaStyle: {
             color: 'red',
-            opacity: 0.1,
+            opacity: 0.3,
           }
         },
         {
@@ -150,6 +165,23 @@ export const Dashboard = () => {
           // smooth: true,
           areaStyle: {
             color: 'red',
+            opacity: 1,
+          }
+        },
+        {
+          coordinateSystem: 'polar',
+          name: 'line',
+          type: 'line',
+          data: sumData.map((sum, i) => [5, sum[1]]),
+          stack: 'total',
+          showSymbol: false,
+          lineStyle: {
+            width: 0,
+            color: 'black',
+          },
+          // smooth: true,
+          areaStyle: {
+            color: 'black',
             opacity: 1,
           }
         },
