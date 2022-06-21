@@ -72,7 +72,7 @@ export const Dashboard = () => {
           lineStyle: {
             color: 'black',
             width: 2,
-            opacity: 1,
+            opacity: 0,
           }
         },
         splitArea: {
@@ -106,7 +106,7 @@ export const Dashboard = () => {
           coordinateSystem: 'polar',
           name: 'line',
           type: 'line',
-          data: sumData.map((sum, i) => [max * 1.5, sum[1]]),
+          data: sumData.map((sum, i) => [max * 0.2, sum[1]]),
           stack: 'total',
           showSymbol: false,
           lineStyle: {
@@ -123,7 +123,7 @@ export const Dashboard = () => {
           coordinateSystem: 'polar',
           name: 'line',
           type: 'line',
-          data: sumData.map((sum, i) => [5, sum[1]]),
+          data: sumData.map((sum, i) => [max * 0.2, sum[1]]),
           stack: 'total',
           showSymbol: false,
           lineStyle: {
@@ -165,23 +165,6 @@ export const Dashboard = () => {
           // smooth: true,
           areaStyle: {
             color: 'red',
-            opacity: 1,
-          }
-        },
-        {
-          coordinateSystem: 'polar',
-          name: 'line',
-          type: 'line',
-          data: sumData.map((sum, i) => [5, sum[1]]),
-          stack: 'total',
-          showSymbol: false,
-          lineStyle: {
-            width: 0,
-            color: 'black',
-          },
-          // smooth: true,
-          areaStyle: {
-            color: 'black',
             opacity: 1,
           }
         },
