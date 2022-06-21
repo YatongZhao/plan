@@ -109,7 +109,7 @@ export const Dashboard = () => {
           coordinateSystem: 'polar',
           name: 'line',
           type: 'line',
-          data: sumData.map((sum, i) => [500, sum[1]]),
+          data: sumData.map((sum, i) => [50, sum[1]]),
           stack: 'total',
           showSymbol: false,
           lineStyle: {
@@ -117,8 +117,8 @@ export const Dashboard = () => {
           },
           // smooth: true,
           areaStyle: {
-            color: 'red',
-            opacity: 0,
+            color: 'mediumturquoise',
+            opacity: 1,
           }
         },
         {
