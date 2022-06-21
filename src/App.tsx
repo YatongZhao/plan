@@ -28,7 +28,7 @@ const Header = styled(Row)`
 `;
 
 const Main = styled(Row)`
-  margin-bottom: 50px;
+  padding-bottom: 50px;
 `
 
 const Bottom = styled(Row)`
