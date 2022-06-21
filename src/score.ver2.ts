@@ -3,18 +3,19 @@ import { ClockIn } from "./features/clockInsSlice";
 import { TimesUnit, Todo } from "./features/todosSlice";
 
 const getCycleIdCore = (unit: TimesUnit, timestamp: number) => {
+    const transTimestamp = timestamp - 3 * 60 * 60 * 1000;
     switch (unit) {
         case 'daily':
-            return moment(timestamp).date();
+            return moment(transTimestamp).date();
         case 'weekly':
-            return moment(timestamp).isoWeek();
+            return moment(transTimestamp).isoWeek();
         case 'monthly':
-            return moment(timestamp).month();
+            return moment(transTimestamp).month();
         case 'quarterly':
-            return moment(timestamp).quarter();
+            return moment(transTimestamp).quarter();
         case 'yearly':
         default:
-            return moment(timestamp).year();
+            return moment(transTimestamp).year();
     }
 }
 
