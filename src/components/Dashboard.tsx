@@ -5,7 +5,6 @@ import { useLast30Days30DaysSumScoreSum, useLast30DaysCycleAddedScore, useLast30
 import * as echarts from 'echarts';
 
 const StyledCard = styled(Card)`
-  padding-top: 20px;
   background-color: mediumturquoise;
   background-color: white;
   & > .ant-card-body {
@@ -109,22 +108,6 @@ export const Dashboard = () => {
           coordinateSystem: 'polar',
           name: 'line',
           type: 'line',
-          data: data,
-          stack: 'total',
-          showSymbol: false,
-          lineStyle: {
-            width: 0
-          },
-          // smooth: true,
-          areaStyle: {
-            color: 'red',
-            opacity: 1,
-          }
-        },
-        {
-          coordinateSystem: 'polar',
-          name: 'line',
-          type: 'line',
           data: sumData.map((sum, i) => [sum[0] - data[i][0], sum[1]]),
           stack: 'total',
           showSymbol: false,
@@ -135,6 +118,22 @@ export const Dashboard = () => {
           areaStyle: {
             color: 'red',
             opacity: 0.3,
+          }
+        },
+        {
+          coordinateSystem: 'polar',
+          name: 'line',
+          type: 'line',
+          data: data,
+          stack: 'total',
+          showSymbol: false,
+          lineStyle: {
+            width: 0
+          },
+          // smooth: true,
+          areaStyle: {
+            color: 'red',
+            opacity: 1,
           }
         },
       ]
