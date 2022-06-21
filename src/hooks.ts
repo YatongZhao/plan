@@ -77,7 +77,7 @@ export const useLast30DaysCycleAddedScore = () => {
   const todos = useAppSelector(todosSelectors.selectAll);
   const clockIns = useAppSelector(clockInsSelectors.selectAll);
 
-  return new Array(30).fill(0).map((_, i) => {
+  return new Array(10).fill(0).map((_, i) => {
     return [
       todos.reduce((pre, current) => {
         return pre + getLastCycleAddedScore(
@@ -103,7 +103,7 @@ export const useLast30Days30DaysSumScoreSum = () => {
   const todos = useAppSelector(todosSelectors.selectAll);
   const clockIns = useAppSelector(clockInsSelectors.selectAll);
 
-  return new Array(30).fill(0).map((_, i) => {
+  return new Array(10).fill(0).map((_, i) => {
     return [
       todos.reduce((pre, current) => {
         return pre + getLast30DaysSumScore(

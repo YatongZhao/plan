@@ -105,6 +105,14 @@ export const Dashboard = () => {
           axisTick: {
             show: false,
           },
+          splitLine: {
+            show: false,
+            lineStyle: {
+              color: 'black',
+              width: 2,
+              opacity: 0,
+            }
+          },
         }
       ],
       series: [
@@ -122,11 +130,11 @@ export const Dashboard = () => {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: 'rgb(128, 255, 165)'
+                color: 'rgb(255, 0, 135)'
               },
               {
                 offset: 1,
-                color: 'rgb(1, 191, 236)'
+                color: 'rgb(135, 0, 157)'
               }
             ])
           },
@@ -149,11 +157,11 @@ export const Dashboard = () => {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: 'rgb(0, 221, 255)'
+                color: 'rgb(255, 191, 0)'
               },
               {
                 offset: 1,
-                color: 'rgb(77, 119, 255)'
+                color: 'rgb(224, 62, 76)'
               }
             ])
           },
