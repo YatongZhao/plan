@@ -7,7 +7,7 @@ import * as echarts from 'echarts';
 const StyledCard = styled(Card)`
   padding-top: 20px;
   background-color: mediumturquoise;
-  /* background-color: white; */
+  background-color: white;
   & > .ant-card-body {
     font-size: 50px;
     display: flex;
@@ -19,6 +19,8 @@ const StyledCard = styled(Card)`
 `;
 
 const Board = styled(Card)`
+  color: white;
+  background-color: darkgreen;
   border-radius: 3px;
   margin: 1px;
   width: 200px;
@@ -76,13 +78,13 @@ export const Dashboard = () => {
             width: 2,
           }
         },
-        // splitArea: {
-        //   show: true,
-        //   areaStyle: {
-        //     color: 'mediumturquoise',
-        //     opacity: 0.1,
-        //   },
-        // },
+        splitArea: {
+          show: true,
+          areaStyle: {
+            color: 'mediumturquoise',
+            opacity: 0.1,
+          },
+        },
       },
       radiusAxis: {
         axisLabel: {
@@ -95,6 +97,7 @@ export const Dashboard = () => {
           show: false,
         },
         splitLine: {
+          show: false,
           lineStyle: {
             color: 'white',
             width: 1,
@@ -106,31 +109,32 @@ export const Dashboard = () => {
           coordinateSystem: 'polar',
           name: 'line',
           type: 'line',
-          data: sumData.map((sum, i) => [sum[0] - data[i][0], sum[1]]),
-          stack: 'total',
-          showSymbol: false,
-          lineStyle: {
-            width: 0
-          },
-          smooth: true,
-          areaStyle: {
-            color: 'red',
-          }
-        },
-        {
-          coordinateSystem: 'polar',
-          name: 'line',
-          type: 'line',
           data: data,
           stack: 'total',
           showSymbol: false,
           lineStyle: {
             width: 0
           },
-          smooth: true,
+          // smooth: true,
           areaStyle: {
             color: 'red',
             opacity: 1,
+          }
+        },
+        {
+          coordinateSystem: 'polar',
+          name: 'line',
+          type: 'line',
+          data: sumData.map((sum, i) => [sum[0] - data[i][0], sum[1]]),
+          stack: 'total',
+          showSymbol: false,
+          lineStyle: {
+            width: 0
+          },
+          // smooth: true,
+          areaStyle: {
+            color: 'red',
+            opacity: 0.3,
           }
         },
       ]
