@@ -5,7 +5,7 @@ import { Button, Col, Row } from 'antd';
 import { Dashboard } from './components/Dashboard';
 import { OperationPanel } from './components/OperationPanel';
 import { AppHeader } from './components/AppHeader';
-import { HistoryOutlined, PlusOutlined, QuestionOutlined } from '@ant-design/icons';
+import { HistoryOutlined, QuestionOutlined } from '@ant-design/icons';
 
 const Wrapper = styled.div`
   padding-bottom: 50px;

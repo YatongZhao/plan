@@ -18,8 +18,7 @@ const StyledCard = styled.div`
 const Board = styled.div`
   color: white;
   background-color: darkgreen;
-  border-radius: 3px;
-  margin: 1px;
+  /* border-radius: 3px; */
   text-align: center;
   padding: 0px 15px;
   font-size: 14px;
@@ -28,16 +27,20 @@ const Board = styled.div`
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  &:first-of-type {
+    margin-right: 1px;
+  }
 `;
 
 const BoardRow = styled.div`
   display: flex;
-  width: calc(100% - 30px);
+  width: 100%;
+  margin-top: 1px;
 `;
 
 const CanvasBox = styled.div`
   border: 1px solid white;
-  border-radius: 15px;
+  border-radius: 25px;
   margin: 10px 15px 5px;
   overflow: hidden;
   width: calc(100% - 30px);
@@ -296,15 +299,15 @@ export const Dashboard = () => {
     <StyledCard>
       <CanvasBox>
         <Canvas width={500} height={200} ref={ref} />
+        {/* <BoardRow>
+          <Board>
+              近30天收益：<b>{last30DaysSumScoreSum}</b>
+          </Board>
+          <Board>
+              本周期收益：<b>+{lastCycleAddedScoreSum}</b>
+          </Board>
+        </BoardRow> */}
       </CanvasBox>
-      <BoardRow>
-        <Board>
-            近30天收益：<b>{last30DaysSumScoreSum}</b>
-        </Board>
-        <Board>
-            本周期收益：<b>+{lastCycleAddedScoreSum}</b>
-        </Board>
-      </BoardRow>
     </StyledCard>
   </>
 }
