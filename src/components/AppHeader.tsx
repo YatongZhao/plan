@@ -6,10 +6,11 @@ const Wrapper = styled.div`
   box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
   padding: 7px 15px 5px;
   /* background-color: white; */
-  background-color: mediumturquoise;
+  /* background-color: mediumturquoise; */
   margin-top: -4px;
   display: flex;
   justify-content: center;
+  backdrop-filter: blur(5px);
 `;
 
 const SpanBox = styled.div`

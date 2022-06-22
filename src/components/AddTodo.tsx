@@ -6,6 +6,7 @@ import { todosActions } from "../features/todosSlice";
 import { useAppDispatch } from "../store";
 import * as uuid from 'uuid';
 import styled from "styled-components";
+import { PlusOutlined } from "@ant-design/icons";
 
 const TimesBox = styled.div`
   display: flex;
@@ -91,7 +92,7 @@ const AddTodoForm = ({ form }: {
 }
 
 const StyledButton = styled(Button)`
-  border-radius: 10px;
+  border-radius: 5px;
 `;
 
 export const AddTodo = () => {
@@ -128,7 +129,7 @@ export const AddTodo = () => {
 
 
   return <>
-    <StyledButton type="primary" onClick={handleClick}>Add</StyledButton>
+    <StyledButton type="primary" onClick={handleClick} icon={<PlusOutlined />} />
     <Modal transitionName="" title="ADD TODO" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
       <AddTodoForm form={form} />
     </Modal>

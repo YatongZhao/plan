@@ -6,31 +6,46 @@ import * as echarts from 'echarts';
 
 const StyledCard = styled.div`
   background-color: mediumturquoise;
-  /* background-color: white; */
-  /* & > .ant-card-body { */
-    font-size: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  /* } */
+  font-size: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 10px;
 `;
 
-const Board = styled(Card)`
+const Board = styled.div`
   color: white;
   background-color: darkgreen;
   border-radius: 3px;
   margin: 1px;
-  width: 200px;
   text-align: center;
-  & > .ant-card-body {
-    padding: 0px 15px;
-  }
+  padding: 0px 15px;
+  font-size: 14px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+`;
+
+const BoardRow = styled.div`
+  display: flex;
+  width: calc(100% - 30px);
+`;
+
+const CanvasBox = styled.div`
+  border: 1px solid white;
+  border-radius: 15px;
+  margin: 10px 15px 5px;
+  overflow: hidden;
+  width: calc(100% - 30px);
 `;
 
 const Canvas = styled.canvas`
   width: 100%;
+  display: block;
 `;
 
 export const Dashboard = () => {
@@ -46,33 +61,12 @@ export const Dashboard = () => {
     if (!ref.current) return;
 
     const chart = echarts.init(ref.current);
-    const max = sumData.reduce((pre, current) => {
-      return current[0] > pre ? current[0] : pre;
-    }, 0);
+    // const max = sumData.reduce((pre, current) => {
+    //   return current[0] > pre ? current[0] : pre;
+    // }, 0);
     const option = {
-      // color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
-      // title: {
-      //   text: 'Gradient Stacked Area Chart'
-      // },
-      // tooltip: {
-      //   trigger: 'axis',
-      //   axisPointer: {
-      //     type: 'cross',
-      //     label: {
-      //       backgroundColor: '#6a7985'
-      //     }
-      //   }
-      // },
-      // legend: {
-      //   data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
-      // },
-      // toolbox: {
-      //   feature: {
-      //     saveAsImage: {}
-      //   }
-      // },
       grid: {
-        left: '-30%',
+        left: '0',
         right: '30%',
         bottom: '0',
         containLabel: true
@@ -300,13 +294,17 @@ export const Dashboard = () => {
 
   return <>
     <StyledCard>
-      <Canvas width={500} height={300} ref={ref} />
-      <Board bordered={false}>
-          近30天收益：<b>{last30DaysSumScoreSum}</b>
-      </Board>
-      <Board bordered={false}>
-          本周期收益：<b>+{lastCycleAddedScoreSum}</b>
-      </Board>
+      <CanvasBox>
+        <Canvas width={500} height={200} ref={ref} />
+      </CanvasBox>
+      <BoardRow>
+        <Board>
+            近30天收益：<b>{last30DaysSumScoreSum}</b>
+        </Board>
+        <Board>
+            本周期收益：<b>+{lastCycleAddedScoreSum}</b>
+        </Board>
+      </BoardRow>
     </StyledCard>
   </>
 }
